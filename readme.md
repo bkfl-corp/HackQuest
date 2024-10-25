@@ -13,8 +13,8 @@
    Open your terminal and run:
 
    ```bash
-   git clone https://github.com/your-username/duck-hackathon-game.git
-   cd duck-hackathon-game
+   git clone https://github.com/bkfl-corp/HackQuest.git
+   cd hackquest
    ```
 
 3. **Install Dependencies**  
