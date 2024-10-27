@@ -3,9 +3,9 @@ import { useGame } from "../../context/GameContext";
 
 // List of duck-themed hackathons
 const hackathons = [
-  { name: "Community College Ducks", requiredStrength: 5, reward: 20 },
-  { name: "KU Ducks", requiredStrength: 10, reward: 50 },
-  { name: "Stanford Ducks", requiredStrength: 15, reward: 100 },
+  { name: "Duck CC", requiredStrength: 5, reward: 20 },
+  { name: "U of Ducks", requiredStrength: 10, reward: 50 },
+  { name: "Duckford Hacks", requiredStrength: 15, reward: 100 },
 ];
 
 export const Compete: React.FC = () => {
