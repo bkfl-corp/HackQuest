@@ -3,11 +3,14 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main
+      - main # Or your target branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
