@@ -16,12 +16,12 @@
   border-radius: 12px;
   background-color: #1a1a1a;
   color: white;
-  box-sizing: border-box; /* Ensure padding and border are included in size */
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: hidden; /* Prevent overflow from resizing the container */
+  overflow: hidden;
 }
 
 /* Ensure the game title has consistent spacing */
@@ -30,7 +30,7 @@
   font-size: 32px;
 }
 
-/* Main menu button styles */
+/*  button styles */
 button {
   display: block;
   width: 200px;
@@ -49,7 +49,6 @@ button:hover {
   background-color: #1976d2;
 }
 
-/* Horizontal flexbox for stats */
 .stats-container {
   display: flex;
   justify-content: center;
@@ -58,19 +57,17 @@ button:hover {
   font-size: 16px;
 }
 
-/* Shop container styling */
 .shop-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  height: 100%; /* Full height of the game window */
+  height: 100%;
   overflow-y: auto; /* Allow scrolling if content overflows */
   padding: 20px;
   box-sizing: border-box;
 }
 
-/* Shop title styling */
 .shop-title {
   font-size: 28px;
   margin-bottom: 10px;
@@ -105,26 +102,22 @@ button:hover {
   align-items: center;
 }
 
-/* Item name */
 .item-name {
   font-size: 20px;
   margin-bottom: 5px;
 }
 
-/* Item effect text */
 .item-effect {
   font-size: 14px;
   margin-bottom: 10px;
   color: #aaa;
 }
 
-/* Item cost */
 .item-cost {
   font-size: 16px;
   margin-bottom: 10px;
 }
 
-/* Buy button styling */
 .buy-button {
   padding: 8px 16px;
   border: none;
@@ -134,7 +127,6 @@ button:hover {
   transition: background-color 0.3s;
 }
 
-/* Enabled buy button */
 .buy-button.enabled {
   background-color: #4caf50;
 }
@@ -143,13 +135,11 @@ button:hover {
   background-color: #45a049;
 }
 
-/* Disabled buy button */
 .buy-button.disabled {
   background-color: gray;
   cursor: not-allowed;
 }
 
-/* Back to Main Menu button */
 .back-button {
   padding: 10px 20px;
   background-color: #2196f3;
@@ -196,7 +186,7 @@ button:hover {
 
 .opponent-duck {
   top: 25px;
-  animation-delay: 0.5s; /* Opponent starts slightly later */
+  animation-delay: 0.5s;
 }
 
 @keyframes race {
@@ -204,6 +194,6 @@ button:hover {
     left: 0;
   }
   to {
-    left: calc(100% - 32px); /* Move across the screen */
+    left: calc(100% - 32px);
   }
 }

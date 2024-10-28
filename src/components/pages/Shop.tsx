@@ -1,7 +1,6 @@
 import React from "react";
 import { useGame } from "../../context/GameContext";
 
-// Item list for the shop
 const items = [
   { name: "Speed Shoes", cost: 50, effect: "Increase speed by 5" },
   { name: "Power Gloves", cost: 75, effect: "Increase strength by 5" },
@@ -24,7 +23,7 @@ export const Shop: React.FC = () => {
           updateAttributes("endurance", 5);
           break;
       }
-      addCoins(-item.cost); // Deduct item cost from balance
+      addCoins(-item.cost);
     }
   };
 
@@ -33,7 +32,6 @@ export const Shop: React.FC = () => {
       <h2 className="shop-title">Shop</h2>
       <p className="balance">Balance: {coins} coins</p>
 
-      {/* Grid for displaying items */}
       <div className="item-grid">
         {items.map((item) => (
           <div className="item-card" key={item.name}>

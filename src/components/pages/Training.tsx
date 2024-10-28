@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useGame } from "../../context/GameContext";
 
-// Example hackathon-related words
 const words = [
   "innovation",
   "teamwork",
@@ -18,12 +17,12 @@ const words = [
 ];
 
 export const Training: React.FC = () => {
-  const { addCoins, updateAttributes, setPage, coins } = useGame(); // Access coins from context
+  const { addCoins, updateAttributes, setPage, coins } = useGame();
   const [targetWord, setTargetWord] = useState("");
   const [input, setInput] = useState("");
   const [pointsEarned, setPointsEarned] = useState(0);
   const [showPoints, setShowPoints] = useState(false);
-  const [errorIndex, setErrorIndex] = useState<number | null>(null); // Track error position
+  const [errorIndex, setErrorIndex] = useState<number | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Pick a random word when the component mounts or resets
@@ -56,14 +55,14 @@ export const Training: React.FC = () => {
 
     // Check if the word is completed
     if (input + e.key === targetWord) {
-      const earnedPoints = targetWord.length * 2; // Scoring logic
-      addCoins(earnedPoints); // Add points to user account
-      updateAttributes("speed", 1); // Increase speed attribute
+      const earnedPoints = targetWord.length * 2;
+      addCoins(earnedPoints);
+      updateAttributes("speed", 1);
 
-      setPointsEarned(earnedPoints); // Set points for display
+      setPointsEarned(earnedPoints);
       setShowPoints(true); // Show overlay
 
-      // Generate new word after a short delay
+      // Generate new word
       setTimeout(generateNewWord, 500);
     }
   };
@@ -102,13 +101,12 @@ export const Training: React.FC = () => {
         ))}
       </div>
 
-      {/* Hidden input for tracking key presses */}
       <input
         ref={inputRef}
         type="text"
         value={input}
         onKeyDown={handleKeyPress}
-        style={{ position: "absolute", top: "-9999px" }} // Hide input
+        style={{ position: "absolute", top: "-9999px" }}
       />
 
       {/* Points overlay */}

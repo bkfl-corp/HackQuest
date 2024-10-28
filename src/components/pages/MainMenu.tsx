@@ -13,7 +13,6 @@ export const MainMenu: React.FC = () => {
     >
       <h2>Main Menu</h2>
 
-      {/* Main buttons */}
       <div style={{ margin: "20px 0" }}>
         <button onClick={() => setPage("training")} style={menuButtonStyle}>
           🏋️‍♂️ Training
@@ -57,7 +56,7 @@ const menuButtonStyle: React.CSSProperties = {
 const statsContainerStyle: React.CSSProperties = {
   display: "flex",
   justifyContent: "center",
-  gap: "20px", // Space between each stat
+  gap: "20px",
   marginTop: "20px",
-  fontSize: "16px", // Simple, readable text size
+  fontSize: "16px",
 };

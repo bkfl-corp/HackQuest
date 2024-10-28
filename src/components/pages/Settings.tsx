@@ -11,9 +11,8 @@ const playSound = (url: string, isSoundEnabled: boolean) => {
 
 export const Settings: React.FC = () => {
   const { setCustomization, setPage } = useGame();
-  const [isSoundEnabled, setIsSoundEnabled] = useState(true); // Sound toggle state
+  const [isSoundEnabled, setIsSoundEnabled] = useState(true);
 
-  // Save and load sound settings from localStorage
   useEffect(() => {
     const savedSetting = localStorage.getItem("soundEnabled");
     setIsSoundEnabled(savedSetting === "true");
@@ -22,7 +21,7 @@ export const Settings: React.FC = () => {
   const toggleSound = () => {
     const newState = !isSoundEnabled;
     setIsSoundEnabled(newState);
-    localStorage.setItem("soundEnabled", String(newState)); // Persist setting
+    localStorage.setItem("soundEnabled", String(newState));
   };
 
   return (
