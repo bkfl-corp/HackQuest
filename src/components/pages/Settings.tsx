@@ -1,70 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useGame } from "../../context/GameContext";
 
-// Helper function to play sound effects
-const playSound = (url: string, isSoundEnabled: boolean) => {
-  if (isSoundEnabled) {
-    const audio = new Audio(url);
-    audio.play();
-  }
-};
-
 export const Settings: React.FC = () => {
-  const { setCustomization, setPage } = useGame();
-  const [isSoundEnabled, setIsSoundEnabled] = useState(true);
+  const { setPage } = useGame();
 
-  useEffect(() => {
-    const savedSetting = localStorage.getItem("soundEnabled");
-    setIsSoundEnabled(savedSetting === "true");
-  }, []);
-
-  const toggleSound = () => {
-    const newState = !isSoundEnabled;
-    setIsSoundEnabled(newState);
-    localStorage.setItem("soundEnabled", String(newState));
+  const handleResetGame = () => {
+    localStorage.removeItem("duckLifeGameState");
+    window.location.reload();
   };
 
   return (
-    <div className="settings-container">
-      <h2>Settings</h2>
+    <div className="flex flex-col items-center justify-center text-white space-y-4">
+      <h2 className="text-4xl font-bold mb-4">Settings</h2>
 
-      {/* Sound Toggle */}
-      <div className="toggle-container">
-        <label className="toggle-label">
-          <input
-            type="checkbox"
-            checked={isSoundEnabled}
-            onChange={toggleSound}
-          />
-          Enable Sound Effects
-        </label>
-      </div>
-
-      {/* Customization Buttons */}
+      {/* Reset Game Button */}
       <button
-        onClick={() => {
-          playSound("/sounds/click.mp3", isSoundEnabled);
-          setCustomization("cool-duck");
-        }}
+        onClick={handleResetGame}
+        className="px-6 py-3 bg-red-500 rounded-lg hover:bg-red-600 transition-colors focus:outline-none focus:ring-2 focus:ring-red-400"
       >
-        Cool Duck
+        Reset Game
       </button>
 
+      {/* Back to Main Menu Button */}
       <button
-        onClick={() => {
-          playSound("/sounds/click.mp3", isSoundEnabled);
-          setCustomization("default");
-        }}
-      >
-        Default
-      </button>
-
-      {/* Back to Main Menu */}
-      <button
-        onClick={() => {
-          playSound("/sounds/back.mp3", isSoundEnabled);
-          setPage("main-menu");
-        }}
+        onClick={() => setPage("main-menu")}
+        className="px-6 py-3 bg-blue-500 rounded-lg hover:bg-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400"
       >
         Back to Main Menu
       </button>

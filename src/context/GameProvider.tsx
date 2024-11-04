@@ -8,17 +8,28 @@ import {
 
 const defaultState: Omit<
   GameState,
-  "setPage" | "updateAttributes" | "addCoins" | "setCustomization"
+  "setPage" | "updateAttributes" | "setCustomization"
 > = {
   page: "main-menu",
-  coins: 0,
-  attributes: { strength: 0, speed: 0, endurance: 0 },
+  attributes: { strength: 0, speed: 0, endurance: 0, mana: 0, bread: 0 },
   customization: "default",
 };
 
 const loadGameState = (): typeof defaultState => {
   const savedState = localStorage.getItem("duckLifeGameState");
-  return savedState ? JSON.parse(savedState) : defaultState;
+  const parsedState = savedState ? JSON.parse(savedState) : defaultState;
+
+  return {
+    page: parsedState.page || "main-menu",
+    attributes: {
+      strength: parsedState.attributes?.strength || 0,
+      speed: parsedState.attributes?.speed || 0,
+      endurance: parsedState.attributes?.endurance || 0,
+      mana: parsedState.attributes?.mana || 0,
+      bread: parsedState.attributes?.bread || 0,
+    },
+    customization: parsedState.customization || "default",
+  };
 };
 
 export const GameProvider: React.FC<{ children: ReactNode }> = ({
@@ -32,16 +43,18 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
 
   const setPage = (page: GamePage) =>
     setGameState((prev) => ({ ...prev, page }));
-  const updateAttributes = (stat: keyof PlayerAttributes, amount: number) =>
+
+  const updateAttributes = (stat: keyof PlayerAttributes, amount: number) => {
+    if (isNaN(amount)) return;
     setGameState((prev) => ({
       ...prev,
       attributes: {
         ...prev.attributes,
-        [stat]: prev.attributes[stat] + amount,
+        [stat]: (prev.attributes[stat] || 0) + amount,
       },
     }));
-  const addCoins = (amount: number) =>
-    setGameState((prev) => ({ ...prev, coins: prev.coins + amount }));
+  };
+
   const setCustomization = (custom: string) =>
     setGameState((prev) => ({ ...prev, customization: custom }));
 
@@ -51,7 +64,6 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
         ...gameState,
         setPage,
         updateAttributes,
-        addCoins,
         setCustomization,
       }}
     >

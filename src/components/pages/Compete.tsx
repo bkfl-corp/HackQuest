@@ -9,9 +9,9 @@ const hackathons = [
 ];
 
 export const Compete: React.FC = () => {
-  const { attributes, coins, addCoins, updateAttributes, setPage } = useGame();
-  const [message, setMessage] = useState<string | null>(null); // Display results
-  const [isCompeting, setIsCompeting] = useState(false); // Track competition state
+  const { attributes, updateAttributes, setPage } = useGame();
+  const [message, setMessage] = useState<string | null>(null);
+  const [isCompeting, setIsCompeting] = useState(false);
 
   // Simulate an opponent's strength based on difficulty level
   const generateOpponentStrength = (difficulty: number) => {
@@ -26,7 +26,7 @@ export const Compete: React.FC = () => {
       return;
     }
 
-    setIsCompeting(true); // Start the competition animation
+    setIsCompeting(true);
 
     setTimeout(() => {
       const opponentStrength = generateOpponentStrength(
@@ -34,53 +34,43 @@ export const Compete: React.FC = () => {
       );
 
       if (attributes.strength >= opponentStrength) {
-        const rewardCoins = hackathon.reward;
-        addCoins(rewardCoins); // Reward coins
+        const rewardBread = hackathon.reward;
+        updateAttributes("bread", rewardBread); // Reward bread instead of coins
         updateAttributes("strength", -hackathon.requiredStrength / 2); // Reduce some strength
 
         setMessage(
-          `🎉 You won the ${hackathon.name} and earned ${rewardCoins} coins! 🏆`
+          `🎉 You won the ${hackathon.name} and earned ${rewardBread} bread! 🏆`
         );
       } else {
         setMessage(`😢 You lost to the other ducks. Try training more!`);
       }
 
-      setIsCompeting(false); // End the competition animation
+      setIsCompeting(false);
     }, 3000); // 3-second animation
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "20px" }}>
-      <h2>Compete in Hackathon</h2>
+    <div className="text-center mt-5">
+      <h2 className="text-3xl font-bold mb-6 ">Compete in Hackathon</h2>
 
       {/* Display Current Stats */}
-      <p>💪 Strength: {attributes.strength}</p>
-      <p>💰 Coins: {coins}</p>
+      <div className="mb-6 text-lg ">
+        <p>💪 Strength: {attributes.strength}</p>
+        <p>🍞 Bread: {attributes.bread}</p>
+      </div>
 
       {/* Hackathon Selection */}
-      <div style={{ margin: "20px 0" }}>
+      <div className="space-y-4 mb-8">
         {hackathons.map((hackathon) => (
           <button
             key={hackathon.name}
             onClick={() => handleCompete(hackathon)}
             disabled={isCompeting} // Disable buttons during animation
-            style={{
-              display: "block",
-              margin: "10px auto",
-              padding: "10px 20px",
-              backgroundColor:
-                attributes.strength >= hackathon.requiredStrength
-                  ? "green"
-                  : "gray",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              cursor: isCompeting
-                ? "not-allowed"
-                : attributes.strength >= hackathon.requiredStrength
-                ? "pointer"
-                : "not-allowed",
-            }}
+            className={`w-48 py-3 rounded-lg text-white transition ${
+              attributes.strength >= hackathon.requiredStrength
+                ? "bg-green-500 hover:bg-green-600 cursor-pointer"
+                : "bg-gray-400 cursor-not-allowed"
+            }`}
           >
             {hackathon.name} (Requires {hackathon.requiredStrength} Strength)
           </button>
@@ -89,20 +79,18 @@ export const Compete: React.FC = () => {
 
       {/* Duck Race Animation */}
       {isCompeting && (
-        <div className="race-container">
-          <div className="duck">🦆</div>
-          <div className="opponent-duck">🦆</div>
+        <div className="race-container flex justify-center space-x-4 mb-6">
+          <div className="duck text-4xl animate-bounce">🦆</div>
+          <div className="opponent-duck text-4xl animate-bounce">🦆</div>
         </div>
       )}
 
       {/* Display Result Message */}
       {message && (
         <div
-          style={{
-            marginTop: "10px",
-            fontSize: "18px",
-            color: message.includes("🎉") ? "green" : "red",
-          }}
+          className={`mt-4 text-lg ${
+            message.includes("🎉") ? "text-green-500" : "text-red-500"
+          }`}
         >
           {message}
         </div>
@@ -110,7 +98,7 @@ export const Compete: React.FC = () => {
 
       <button
         onClick={() => setPage("main-menu")}
-        style={{ marginTop: "20px" }}
+        className="mt-6 w-48 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg"
       >
         Back to Main Menu
       </button>

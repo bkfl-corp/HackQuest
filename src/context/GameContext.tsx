@@ -11,16 +11,16 @@ export interface PlayerAttributes {
   strength: number;
   speed: number;
   endurance: number;
+  mana: number;
+  bread: number; // Bread added as a player attribute
 }
 
 export interface GameState {
   page: GamePage;
-  coins: number;
   attributes: PlayerAttributes;
   customization: string;
   setPage: (page: GamePage) => void;
   updateAttributes: (stat: keyof PlayerAttributes, amount: number) => void;
-  addCoins: (amount: number) => void;
   setCustomization: (custom: string) => void;
 }
 
@@ -34,4 +34,59 @@ export const useGame = () => {
     throw new Error("useGame must be used within a GameProvider");
   }
   return context;
+};
+
+import React, { ReactNode, useEffect, useState } from "react";
+
+// Default state updated to include bread within attributes
+const defaultState: Omit<
+  GameState,
+  "setPage" | "updateAttributes" | "setCustomization"
+> = {
+  page: "main-menu",
+  attributes: { strength: 0, speed: 0, endurance: 0, mana: 0, bread: 0 }, // Initial bread balance in attributes
+  customization: "default",
+};
+
+const loadGameState = (): typeof defaultState => {
+  const savedState = localStorage.getItem("duckLifeGameState");
+  return savedState ? JSON.parse(savedState) : defaultState;
+};
+
+export const GameProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
+  const [gameState, setGameState] = useState(loadGameState);
+
+  useEffect(() => {
+    localStorage.setItem("duckLifeGameState", JSON.stringify(gameState));
+  }, [gameState]);
+
+  const setPage = (page: GamePage) =>
+    setGameState((prev) => ({ ...prev, page }));
+
+  const updateAttributes = (stat: keyof PlayerAttributes, amount: number) =>
+    setGameState((prev) => ({
+      ...prev,
+      attributes: {
+        ...prev.attributes,
+        [stat]: prev.attributes[stat] + amount,
+      },
+    }));
+
+  const setCustomization = (custom: string) =>
+    setGameState((prev) => ({ ...prev, customization: custom }));
+
+  return (
+    <GameContext.Provider
+      value={{
+        ...gameState,
+        setPage,
+        updateAttributes,
+        setCustomization,
+      }}
+    >
+      {children}
+    </GameContext.Provider>
+  );
 };
