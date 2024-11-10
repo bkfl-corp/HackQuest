@@ -40,6 +40,7 @@ export const TypingGame: React.FC = () => {
   const [accuracy, setAccuracy] = useState(100);
   const [wpm, setWpm] = useState(0);
   const [pointsEarned, setPointsEarned] = useState(0);
+  const [hackingEarned, setHackingEarned] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -134,11 +135,14 @@ export const TypingGame: React.FC = () => {
     const finalWpm = Math.round(words / timeTaken);
     const finalAccuracy = calculateAccuracy();
     const earnedPoints = Math.round(finalWpm * (finalAccuracy / 100));
+    const earnedHacking = Math.floor(finalWpm/words);
 
     setWpm(finalWpm);
     setAccuracy(finalAccuracy);
     setPointsEarned(earnedPoints);
+    setHackingEarned(earnedHacking);
     updateAttributes("bread", earnedPoints);
+    updateAttributes("hacking",  earnedHacking);
     setGameOver(true);
   };
 
@@ -152,6 +156,8 @@ export const TypingGame: React.FC = () => {
           </div>
           <p className="text-2xl text-white mb-6">
             Bread Earned: {pointsEarned}
+            <br />
+            Hacking Earned: {hackingEarned}
           </p>
           <button
             onClick={generateNewSentence}
