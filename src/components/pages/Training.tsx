@@ -100,6 +100,9 @@ export const TypingGame: React.FC = () => {
         endGame();
       }
     } else if (key.length === 1) {
+      if (mistakes >= 3) {
+        endGame();
+      }
       setMistakes((prevMistakes) => prevMistakes + 1);
       setErrorIndex(currentIndex);
       setTimeout(() => setErrorIndex(null), 250);
@@ -134,8 +137,8 @@ export const TypingGame: React.FC = () => {
     const words = targetSentence.split(" ").length;
     const finalWpm = Math.round(words / timeTaken);
     const finalAccuracy = calculateAccuracy();
-    const earnedPoints = Math.round(finalWpm * (finalAccuracy / 100));
-    const earnedHacking = 1;
+    const earnedPoints = mistakes >= 3 ? 0 : Math.round(finalWpm * (finalAccuracy / 100));
+    const earnedHacking = mistakes >= 3 ? 0 : 1;
 
     setWpm(finalWpm);
     setAccuracy(finalAccuracy);
