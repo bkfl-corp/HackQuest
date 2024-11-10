@@ -41,7 +41,7 @@ export const MainMenu: React.FC = () => {
           onClick={() => setPage("training")}
           className="py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
         >
-          🏋️‍♂️ Training
+          🏋️ Training
         </button>
         <button
           onClick={() => setPage("compete")}
@@ -59,24 +59,23 @@ export const MainMenu: React.FC = () => {
           onClick={() => setPage("settings")}
           className="py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
         >
-          ⚙️ Settings
+          ⚙️  Settings
         </button>
       </div>
 
       {/* Stats Display */}
       <div className="flex justify-center space-x-6 text-lg mt-8">
         <div>🍞 {attributes.bread} Bread</div>
-        <div>💪 {attributes.strength} Strength</div>
-        <div>⚡ {attributes.speed} Speed</div>
-        <div>🏃‍♂️ {attributes.endurance} Endurance</div>
+        <div>👾 {attributes.hacking} Hacking</div>
+        <div>⚡️ {attributes.mana} Mana</div>
       </div>
 
-      {/* Duck Container */}
+      {/* Dragon Container */}
       <div
         className="relative w-full h-20 mt-6 bg-gray-700"
         onClick={handleContainerClick}
       >
-        {/* Duck Emoji */}
+        {/* Dragon Emoji */}
         <div
           ref={duckRef}
           style={{
@@ -89,7 +88,7 @@ export const MainMenu: React.FC = () => {
             cursor: "default",
           }}
         >
-          🦆
+          🐉
         </div>
       </div>
     </div>

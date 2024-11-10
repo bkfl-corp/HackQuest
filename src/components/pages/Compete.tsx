@@ -3,9 +3,9 @@ import { useGame } from "../../context/GameContext";
 
 // List of duck-themed hackathons
 const hackathons = [
-  { name: "Duck CC", requiredStrength: 5, reward: 20 },
-  { name: "U of Ducks", requiredStrength: 10, reward: 50 },
-  { name: "Duckford Hacks", requiredStrength: 15, reward: 100 },
+  { name: "Duck CC", requiredHacking: 5, reward: 20 },
+  { name: "U of Ducks", requiredHacking: 10, reward: 50 },
+  { name: "Duckford Hacks", requiredHacking: 15, reward: 100 },
 ];
 
 export const Compete: React.FC = () => {
@@ -14,14 +14,14 @@ export const Compete: React.FC = () => {
   const [isCompeting, setIsCompeting] = useState(false);
 
   // Simulate an opponent's strength based on difficulty level
-  const generateOpponentStrength = (difficulty: number) => {
+  const generateOpponentHacking = (difficulty: number) => {
     return Math.floor(Math.random() * difficulty) + difficulty;
   };
 
   const handleCompete = (hackathon: (typeof hackathons)[0]) => {
-    if (attributes.strength < hackathon.requiredStrength) {
+    if (attributes.hacking < hackathon.requiredHacking) {
       setMessage(
-        `🚫 You need at least ${hackathon.requiredStrength} strength to compete in ${hackathon.name}. Train more!`
+        `🚫 You need at least ${hackathon.requiredHacking} hacking to compete in ${hackathon.name}. Train more!`
       );
       return;
     }
@@ -29,14 +29,14 @@ export const Compete: React.FC = () => {
     setIsCompeting(true);
 
     setTimeout(() => {
-      const opponentStrength = generateOpponentStrength(
-        hackathon.requiredStrength
+      const opponentHacking = generateOpponentHacking(
+        hackathon.requiredHacking
       );
 
-      if (attributes.strength >= opponentStrength) {
+      if (attributes.hacking >= opponentHacking) {
         const rewardBread = hackathon.reward;
         updateAttributes("bread", rewardBread); // Reward bread instead of coins
-        updateAttributes("strength", -hackathon.requiredStrength / 2); // Reduce some strength
+//        updateAttributes("hacking", -hackathon.requiredHacking / 2); // Reduce some strength
 
         setMessage(
           `🎉 You won the ${hackathon.name} and earned ${rewardBread} bread! 🏆`
@@ -55,7 +55,7 @@ export const Compete: React.FC = () => {
 
       {/* Display Current Stats */}
       <div className="mb-6 text-lg ">
-        <p>💪 Strength: {attributes.strength}</p>
+        <p>👾 Hacking: {attributes.hacking}</p>
         <p>🍞 Bread: {attributes.bread}</p>
       </div>
 
@@ -67,12 +67,12 @@ export const Compete: React.FC = () => {
             onClick={() => handleCompete(hackathon)}
             disabled={isCompeting} // Disable buttons during animation
             className={`w-48 py-3 rounded-lg text-white transition ${
-              attributes.strength >= hackathon.requiredStrength
+              attributes.hacking >= hackathon.requiredHacking
                 ? "bg-green-500 hover:bg-green-600 cursor-pointer"
                 : "bg-gray-400 cursor-not-allowed"
             }`}
           >
-            {hackathon.name} (Requires {hackathon.requiredStrength} Strength)
+            {hackathon.name} (Requires {hackathon.requiredHacking} Hacking)
           </button>
         ))}
       </div>
@@ -80,8 +80,8 @@ export const Compete: React.FC = () => {
       {/* Duck Race Animation */}
       {isCompeting && (
         <div className="race-container flex justify-center space-x-4 mb-6">
-          <div className="duck text-4xl animate-bounce">🦆</div>
-          <div className="opponent-duck text-4xl animate-bounce">🦆</div>
+          <div className="duck text-4xl animate-bounce">🐉</div>
+          <div className="opponent-duck text-4xl animate-bounce">🐉</div>
         </div>
       )}
 

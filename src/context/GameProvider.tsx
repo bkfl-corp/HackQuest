@@ -11,7 +11,7 @@ const defaultState: Omit<
   "setPage" | "updateAttributes" | "setCustomization"
 > = {
   page: "main-menu",
-  attributes: { strength: 0, speed: 0, endurance: 0, mana: 0, bread: 0 },
+  attributes: { hacking: 0, mana: 0, bread: 0 },
   customization: "default",
 };
 
@@ -22,9 +22,7 @@ const loadGameState = (): typeof defaultState => {
   return {
     page: parsedState.page || "main-menu",
     attributes: {
-      strength: parsedState.attributes?.strength || 0,
-      speed: parsedState.attributes?.speed || 0,
-      endurance: parsedState.attributes?.endurance || 0,
+      hacking: parsedState.attributes?.hacking || 0,
       mana: parsedState.attributes?.mana || 0,
       bread: parsedState.attributes?.bread || 0,
     },

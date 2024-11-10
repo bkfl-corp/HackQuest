@@ -8,9 +8,7 @@ export type GamePage =
   | "settings";
 
 export interface PlayerAttributes {
-  strength: number;
-  speed: number;
-  endurance: number;
+  hacking: number;
   mana: number;
   bread: number; // Bread added as a player attribute
 }
@@ -44,7 +42,7 @@ const defaultState: Omit<
   "setPage" | "updateAttributes" | "setCustomization"
 > = {
   page: "main-menu",
-  attributes: { strength: 0, speed: 0, endurance: 0, mana: 0, bread: 0 }, // Initial bread balance in attributes
+  attributes: { hacking: 0, mana: 0, bread: 0 }, // Initial bread balance in attributes
   customization: "default",
 };
 
