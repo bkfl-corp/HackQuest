@@ -84,7 +84,7 @@ export const TypingGame: React.FC = () => {
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (gameOver || !targetSentence) return;
-
+    
     const key = e.key;
     if (startTime === null) setStartTime(Date.now());
 
@@ -135,7 +135,7 @@ export const TypingGame: React.FC = () => {
     const finalWpm = Math.round(words / timeTaken);
     const finalAccuracy = calculateAccuracy();
     const earnedPoints = Math.round(finalWpm * (finalAccuracy / 100));
-    const earnedHacking = Math.floor(finalWpm/words);
+    const earnedHacking = 1;
 
     setWpm(finalWpm);
     setAccuracy(finalAccuracy);
