@@ -37,7 +37,7 @@ export const TypingGame: React.FC = () => {
   const [mistakes, setMistakes] = useState(0);
   const [errorIndex, setErrorIndex] = useState<number | null>(null);
   const [startTime, setStartTime] = useState<number | null>(null);
-  const [accuracy, setAccuracy] = useState(100);
+  const [accuracy, setAccuracy] = useState<number | null>(null);
   const [wpm, setWpm] = useState(0);
   const [pointsEarned, setPointsEarned] = useState(0);
   const [hackingEarned, setHackingEarned] = useState(0);
@@ -60,7 +60,7 @@ export const TypingGame: React.FC = () => {
     setCurrentIndex(0);
     setMistakes(0);
     setErrorIndex(null);
-    setAccuracy(100);
+    setAccuracy(null);
     setWpm(0);
     setPointsEarned(0);
     setGameOver(false);
@@ -69,6 +69,9 @@ export const TypingGame: React.FC = () => {
   };
 
   const calculateWPM = () => {
+    if (currentIndex < 5) {
+      return 0;
+    }
     if (!startTime) return 0;
     const timeElapsed = (Date.now() - startTime) / 1000 / 60;
     const wordsTyped = currentIndex / 5;
@@ -100,12 +103,12 @@ export const TypingGame: React.FC = () => {
         endGame();
       }
     } else if (key.length === 1) {
-      if (mistakes >= 3) {
-        endGame();
-      }
       setMistakes((prevMistakes) => prevMistakes + 1);
       setErrorIndex(currentIndex);
       setTimeout(() => setErrorIndex(null), 250);
+      if (mistakes >= 2) {
+        endGame();
+      }
     } else if (key === "Backspace") {
       if (currentIndex > 0) {
         setCurrentIndex((prevIndex) => prevIndex - 1);
@@ -135,10 +138,10 @@ export const TypingGame: React.FC = () => {
     const endTime = Date.now();
     const timeTaken = (endTime - (startTime ?? endTime)) / 1000 / 60;
     const words = targetSentence.split(" ").length;
-    const finalWpm = Math.round(words / timeTaken);
-    const finalAccuracy = calculateAccuracy();
-    const earnedPoints = mistakes >= 3 ? 0 : Math.round(finalWpm * (finalAccuracy / 100));
-    const earnedHacking = mistakes >= 3 ? 0 : 1;
+    const finalWpm = currentIndex < 5 ? 0 : Math.round(words / timeTaken);
+    const finalAccuracy = accuracy === null ? 0 : calculateAccuracy();
+    const earnedPoints = mistakes >= 2 ? 0 : Math.round(finalWpm * (finalAccuracy / 100));
+    const earnedHacking = mistakes >= 2 ? 0 : 1;
 
     setWpm(finalWpm);
     setAccuracy(finalAccuracy);
