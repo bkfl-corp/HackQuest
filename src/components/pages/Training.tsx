@@ -123,7 +123,7 @@ export const TypingGame: React.FC = () => {
   useEffect(() => {
     if (gameOver) {
       const handleRestartKey = (e: KeyboardEvent) => {
-        if (e.key === " " || e.key === "Enter") {
+        if (e.key === "Enter") {
           generateNewSentence();
         }
       };
@@ -169,7 +169,7 @@ export const TypingGame: React.FC = () => {
             onClick={generateNewSentence}
             className="mb-2 px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
           >
-            Play Again (Press "Space" or "Enter")
+            Play Again (Press "Enter")
           </button>
           <button
             onClick={() => setPage("main-menu")}
