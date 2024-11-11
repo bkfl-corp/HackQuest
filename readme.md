@@ -1,7 +1,7 @@
 ## **Setup Instructions**
 
 1. **Install Node.js**  
-   Download and install Node.js from [https://nodejs.org/](https://nodejs.org/).  
+   Download and install Node.js (version 23.1.0) from [https://nodejs.org/](https://nodejs.org/).  
    After installation, confirm it works by running:
 
    ```bash
