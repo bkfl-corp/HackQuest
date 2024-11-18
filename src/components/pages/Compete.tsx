@@ -36,7 +36,7 @@ export const Compete: React.FC = () => {
       if (attributes.hacking >= opponentHacking) {
         const rewardBread = hackathon.reward;
         updateAttributes("bread", rewardBread); // Reward bread instead of coins
-//        updateAttributes("hacking", -hackathon.requiredHacking / 2); // Reduce some strength
+        //        updateAttributes("hacking", -hackathon.requiredHacking / 2); // Reduce some strength
 
         setMessage(
           `🎉 You won the ${hackathon.name} and earned ${rewardBread} bread! 🏆`
@@ -65,7 +65,7 @@ export const Compete: React.FC = () => {
           <button
             key={hackathon.name}
             onClick={() => handleCompete(hackathon)}
-            disabled={isCompeting} // Disable buttons during animation
+            disabled={isCompeting}
             className={`w-48 py-3 rounded-lg text-white transition ${
               attributes.hacking >= hackathon.requiredHacking
                 ? "bg-green-500 hover:bg-green-600 cursor-pointer"
