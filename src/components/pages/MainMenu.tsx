@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useGame } from "../../context/GameContext";
+import { Player } from "../Player";
 
 export const MainMenu: React.FC = () => {
   const { setPage, attributes } = useGame();
@@ -72,7 +73,7 @@ export const MainMenu: React.FC = () => {
 
       {/* Dragon Container */}
       <div
-        className="relative w-full h-20 mt-6 bg-gray-700"
+        className="relative w-full h-20 mt-6 bg-gray-700 p-16"
         onClick={handleContainerClick}
       >
         {/* Dragon Emoji */}
@@ -88,7 +89,7 @@ export const MainMenu: React.FC = () => {
             cursor: "default",
           }}
         >
-          🐉
+          <Player />
         </div>
       </div>
     </div>

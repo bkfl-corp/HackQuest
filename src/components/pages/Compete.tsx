@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useGame } from "../../context/GameContext";
+import { Player } from "../Player";
 
 interface Hackathon {
 	name: string,
@@ -25,8 +26,8 @@ const hackathons: Array<Hackathon> = [
 function HackathonAnimation() {
 return (
         <div className="race-container flex justify-center space-x-4 mb-6">
-          <div className="duck text-4xl animate-bounce">💻🐉</div>
-          <div className="opponent-duck text-4xl animate-bounce">💻🐉</div>
+          <div className="player text-4xl animate-bounce"><Player /></div>
+          <div className="opponent1 text-4xl animate-bounce">🐉</div>
         </div>
       );
 	

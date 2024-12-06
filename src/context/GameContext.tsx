@@ -13,12 +13,20 @@ export interface PlayerAttributes {
   bread: number; // Bread added as a player attribute
 }
 
+export interface PlayerAcessories {
+	hasHat: boolean;
+	hasFamiliar: boolean;
+	hasWand: boolean;
+}
+
 export interface GameState {
   page: GamePage;
   attributes: PlayerAttributes;
+  acessories: PlayerAcessories;
   customization: string;
   setPage: (page: GamePage) => void;
   updateAttributes: (stat: keyof PlayerAttributes, amount: number) => void;
+buyAcessory: (stat: keyof PlayerAcessories) => void;
   setCustomization: (custom: string) => void;
 }
 
@@ -39,10 +47,11 @@ import React, { ReactNode, useEffect, useState } from "react";
 // Default state updated to include bread within attributes
 const defaultState: Omit<
   GameState,
-  "setPage" | "updateAttributes" | "setCustomization"
+  "setPage" | "updateAttributes" | "setCustomization" | "buyAcessory"
 > = {
   page: "main-menu",
   attributes: { hacking: 0, mana: 0, bread: 0 }, // Initial bread balance in attributes
+acessories: {hasFamiliar: false, hasHat: false, hasWand: false},
   customization: "default",
 };
 
@@ -72,6 +81,16 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
       },
     }));
 
+const buyAcessory = (stat: keyof PlayerAcessories) =>
+    setGameState((prev) => ({
+      ...prev,
+      acessories: {
+        ...prev.acessories,
+        [stat]: true,
+      },
+    }));
+
+
   const setCustomization = (custom: string) =>
     setGameState((prev) => ({ ...prev, customization: custom }));
 
@@ -82,6 +101,7 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
         setPage,
         updateAttributes,
         setCustomization,
+	buyAcessory,
       }}
     >
       {children}
