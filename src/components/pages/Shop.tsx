@@ -13,7 +13,7 @@ const shopAcessories = [
   { id: "wand", name: "Magic Wand", cost: 10000, graphic: "🪄" },
 ];
 
-function hasBought(acessories: PlayerAcessories, id: string) : boolean {
+function hasBought(acessories: PlayerAcessories, id: string) : boolean | null {
 	switch(id) {
 		case "hat":
 			return acessories.hasHat;
@@ -25,6 +25,7 @@ function hasBought(acessories: PlayerAcessories, id: string) : boolean {
 			return acessories.hasWand;
 			break;
 	}
+	return null;
 }
 
 export const Shop: React.FC = () => {
