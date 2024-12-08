@@ -121,15 +121,15 @@ export const TypingGame: React.FC = () => {
     if (startTime !== null && !gameOver) {
       timerRef.current = setInterval(() => {
         if (timeLeftRef.current <= 1) {
-          timeLeftRef.current = 0; // Set to 0 before ending the game
-          setTimeLeft(0); // Update state
-          timeLeftStateRef.current = 0; // Ensure ref is set to 0
+          timeLeftRef.current = 0;
+          setTimeLeft(0);
+          timeLeftStateRef.current = 0;
           clearInterval(timerRef.current!);
           timerRef.current = null;
           endGame();
         } else {
           timeLeftRef.current -= 1;
-          setTimeLeft(timeLeftRef.current); // Synchronize UI
+          setTimeLeft(timeLeftRef.current);
         }
       }, 1000);
     }
@@ -137,6 +137,7 @@ export const TypingGame: React.FC = () => {
     return () => {
       if (timerRef.current) {
         clearInterval(timerRef.current);
+        timerRef.current = null;
       }
     };
   }, [startTime, gameOver, endGame]);

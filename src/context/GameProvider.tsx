@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState, useCallback } from "react";
 import {
   GameContext,
   GameState,
@@ -14,8 +14,8 @@ const defaultState: Omit<
 > = {
   page: "main-menu",
   attributes: { hacking: 0, mana: 0, bread: 0 },
-  customization: "default",
   accessories: { hasHat: false, hasFamiliar: false, hasWand: false },
+  customization: "default",
   animationState: "idle",
 };
 
@@ -49,34 +49,48 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
     localStorage.setItem("duckLifeGameState", JSON.stringify(gameState));
   }, [gameState]);
 
-  const setPage = (page: GamePage) =>
+  // Memoize setPage
+  const setPage = useCallback((page: GamePage) => {
     setGameState((prev) => ({ ...prev, page }));
+  }, []);
 
-  const updateAttributes = (stat: keyof PlayerAttributes, amount: number) => {
-    if (isNaN(amount)) return;
-    setGameState((prev) => ({
-      ...prev,
-      attributes: {
-        ...prev.attributes,
-        [stat]: (prev.attributes[stat] || 0) + amount,
-      },
-    }));
-  };
+  // Memoize updateAttributes
+  const updateAttributes = useCallback(
+    (stat: keyof PlayerAttributes, amount: number) => {
+      if (isNaN(amount)) return;
+      setGameState((prev) => ({
+        ...prev,
+        attributes: {
+          ...prev.attributes,
+          [stat]: (prev.attributes[stat] || 0) + amount,
+        },
+      }));
+    },
+    []
+  );
 
-  const buyAccessory = (stat: keyof PlayerAccessories) =>
-    setGameState((prev) => ({
-      ...prev,
-      accessories: {
-        ...prev.accessories,
-        [stat]: true,
-      },
-    }));
+  // Memoize buyAccessory
+  const buyAccessory = useCallback(
+    (stat: keyof PlayerAccessories) =>
+      setGameState((prev) => ({
+        ...prev,
+        accessories: {
+          ...prev.accessories,
+          [stat]: true,
+        },
+      })),
+    []
+  );
 
-  const setCustomization = (custom: string) =>
+  // Memoize setCustomization
+  const setCustomization = useCallback((custom: string) => {
     setGameState((prev) => ({ ...prev, customization: custom }));
+  }, []);
 
-  const setAnimationState = (state: AnimationState) =>
+  // Memoize setAnimationState
+  const setAnimationState = useCallback((state: AnimationState) => {
     setGameState((prev) => ({ ...prev, animationState: state }));
+  }, []);
 
   return (
     <GameContext.Provider
