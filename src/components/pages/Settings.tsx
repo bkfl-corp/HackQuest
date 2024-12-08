@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useGame } from "../../context/GameContext";
 
 export const Settings: React.FC = () => {
-  const { setPage } = useGame();
+  const { setPage, setAnimationState } = useGame();
+
+  useEffect(() => {
+    setAnimationState('sleeping');
+    return () => setAnimationState('idle');
+  }, [setAnimationState]);
 
   const handleResetGame = () => {
     localStorage.removeItem("duckLifeGameState");

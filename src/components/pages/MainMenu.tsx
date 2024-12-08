@@ -4,7 +4,7 @@ import { Player } from "../Player";
 import backgroundImage from "../../assets/images/bkgrnd1.png" 
 
 export const MainMenu: React.FC = () => {
-  const { setPage, attributes } = useGame();
+  const { setPage, attributes, setAnimationState } = useGame();
   const [duckPosition, setDuckPosition] = useState({ x: 45 }); // Track only horizontal position
   const [duckDirection, setDuckDirection] = useState("right");
   const duckRef = useRef<HTMLDivElement>(null);
@@ -21,12 +21,14 @@ export const MainMenu: React.FC = () => {
 
   // Move duck horizontally in the direction it is facing
   const handleContainerClick = () => {
+    setAnimationState('walking');
     setDuckPosition((prev) => {
       const moveAmount = 10;
       const newX =
         prev.x + (duckDirection === "right" ? moveAmount : -moveAmount);
       return { x: Math.max(0, Math.min(newX, 100)) }; // Clamp within 0-100%
     });
+    setTimeout(() => setAnimationState('idle'), 500); // Reset after movement
   };
 
   useEffect(() => {
@@ -96,7 +98,7 @@ export const MainMenu: React.FC = () => {
             position: "absolute",
             bottom: "10px",
             left: `${duckPosition.x}%`,
-            transform: duckDirection === "left" ? "scaleX(1)" : "scaleX(-1)", // Fix facing direction
+            transform: duckDirection === "left" ? "none" : "scaleX(-1)", // horizontal flip without scaling
             fontSize: "2rem",
             transition: "left 0.2s ease, transform 0.2s ease",
             cursor: "default",

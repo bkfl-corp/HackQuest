@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useGame, PlayerAcessories } from "../../context/GameContext";
+import { useGame, PlayerAccessories } from "../../context/GameContext";
 
 const energyDrinks = [
   { name: "Basic Energy Drink", cost: 20, effect: "+5 mana" },
@@ -13,7 +13,7 @@ const shopAcessories = [
   { id: "wand", name: "Magic Wand", cost: 10000, graphic: "🪄" },
 ];
 
-function hasBought(acessories: PlayerAcessories, id: string) : boolean | null {
+function hasBought(acessories: PlayerAccessories, id: string) : boolean | null {
 	switch(id) {
 		case "hat":
 			return acessories.hasHat;
@@ -29,7 +29,7 @@ function hasBought(acessories: PlayerAcessories, id: string) : boolean | null {
 }
 
 export const Shop: React.FC = () => {
-  const { attributes, acessories, setPage, updateAttributes, buyAcessory} = useGame();
+  const { attributes, accessories, setPage, updateAttributes, buyAccessory } = useGame();
   const [, setInventory] = useState<string[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -37,24 +37,24 @@ export const Shop: React.FC = () => {
     if (attributes.bread >= item.cost) {
      switch(item.id) {
 		case "hat":
-			if(acessories.hasHat) {
+			if(accessories.hasHat) {
 				break;
 			}
-			buyAcessory("hasHat");				
+			buyAccessory("hasHat");				
 			updateAttributes("bread", -item.cost); // Deduct bread
 			break;
 		case "wand":
-			if(acessories.hasWand) {
+			if(accessories.hasWand) {
 				break;
 			}
-			buyAcessory("hasWand");				
+			buyAccessory("hasWand");				
 			updateAttributes("bread", -item.cost); // Deduct bread
 			break;
 		case "familiar":
-			if(acessories.hasFamiliar) {
+			if(accessories.hasFamiliar) {
 				break;
 			}
-			buyAcessory("hasFamiliar");				
+			buyAccessory("hasFamiliar");				
 			updateAttributes("bread", -item.cost); // Deduct bread
 			break;
 
@@ -130,7 +130,7 @@ setErrorMessage("Insufficient bread to purchase this item."); // Set error messa
               onClick={() => handleAcessoryPurchase(item)}
               disabled={attributes.bread < item.cost}
               className={`w-full py-2 rounded ${
-                attributes.bread >= item.cost && ! hasBought(acessories, item.id) 
+                attributes.bread >= item.cost && ! hasBought(accessories, item.id) 
                   ? "bg-blue-500 hover:bg-blue-600 text-white"
                   : "bg-gray-400 text-gray-700 cursor-not-allowed"
               }`}

@@ -1,20 +1,22 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState, useCallback } from "react";
 import {
   GameContext,
   GameState,
   PlayerAttributes,
-	PlayerAcessories,
+  PlayerAccessories,
   GamePage,
+  AnimationState,
 } from "./GameContext";
 
 const defaultState: Omit<
   GameState,
-  "setPage" | "updateAttributes" | "setCustomization" | "buyAcessory"
+  "setPage" | "updateAttributes" | "setCustomization" | "buyAccessory" | "setAnimationState"
 > = {
   page: "main-menu",
   attributes: { hacking: 0, mana: 0, bread: 0 },
+  accessories: { hasHat: false, hasFamiliar: false, hasWand: false },
   customization: "default",
-		acessories: {hasHat: false, hasFamiliar: false, hasWand: false}
+  animationState: "idle",
 };
 
 const loadGameState = (): typeof defaultState => {
@@ -28,12 +30,13 @@ const loadGameState = (): typeof defaultState => {
       mana: parsedState.attributes?.mana || 0,
       bread: parsedState.attributes?.bread || 0,
     },
-acessories: {
-      hasFamiliar: parsedState.acessories?.hasFamiliar || false,
-      hasHat: parsedState.acessories?.hasHat || false,
-      hasWand: parsedState.acessories?.hasWand || false,
-		},
+    accessories: {
+      hasFamiliar: parsedState.accessories?.hasFamiliar || false,
+      hasHat: parsedState.accessories?.hasHat || false,
+      hasWand: parsedState.accessories?.hasWand || false,
+    },
     customization: parsedState.customization || "default",
+    animationState: parsedState.animationState || "idle",
   };
 };
 
@@ -46,31 +49,48 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
     localStorage.setItem("duckLifeGameState", JSON.stringify(gameState));
   }, [gameState]);
 
-  const setPage = (page: GamePage) =>
+  // Memoize setPage
+  const setPage = useCallback((page: GamePage) => {
     setGameState((prev) => ({ ...prev, page }));
+  }, []);
 
-  const updateAttributes = (stat: keyof PlayerAttributes, amount: number) => {
-    if (isNaN(amount)) return;
-    setGameState((prev) => ({
-      ...prev,
-      attributes: {
-        ...prev.attributes,
-        [stat]: (prev.attributes[stat] || 0) + amount,
-      },
-    }));
-  };
-const buyAcessory = (stat: keyof PlayerAcessories) =>
-    setGameState((prev) => ({
-      ...prev,
-      acessories: {
-        ...prev.acessories,
-        [stat]: true,
-      },
-    }));
+  // Memoize updateAttributes
+  const updateAttributes = useCallback(
+    (stat: keyof PlayerAttributes, amount: number) => {
+      if (isNaN(amount)) return;
+      setGameState((prev) => ({
+        ...prev,
+        attributes: {
+          ...prev.attributes,
+          [stat]: (prev.attributes[stat] || 0) + amount,
+        },
+      }));
+    },
+    []
+  );
 
+  // Memoize buyAccessory
+  const buyAccessory = useCallback(
+    (stat: keyof PlayerAccessories) =>
+      setGameState((prev) => ({
+        ...prev,
+        accessories: {
+          ...prev.accessories,
+          [stat]: true,
+        },
+      })),
+    []
+  );
 
-  const setCustomization = (custom: string) =>
+  // Memoize setCustomization
+  const setCustomization = useCallback((custom: string) => {
     setGameState((prev) => ({ ...prev, customization: custom }));
+  }, []);
+
+  // Memoize setAnimationState
+  const setAnimationState = useCallback((state: AnimationState) => {
+    setGameState((prev) => ({ ...prev, animationState: state }));
+  }, []);
 
   return (
     <GameContext.Provider
@@ -79,7 +99,8 @@ const buyAcessory = (stat: keyof PlayerAcessories) =>
         setPage,
         updateAttributes,
         setCustomization,
-				buyAcessory,
+        buyAccessory,
+        setAnimationState,
       }}
     >
       {children}

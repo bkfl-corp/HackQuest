@@ -7,27 +7,31 @@ export type GamePage =
   | "shop"
   | "settings";
 
+export type AnimationState = 'idle' | 'walking' | 'sleeping' | 'typing';
+
 export interface PlayerAttributes {
   hacking: number;
   mana: number;
   bread: number; // Bread added as a player attribute
 }
 
-export interface PlayerAcessories {
-	hasHat: boolean;
-	hasFamiliar: boolean;
-	hasWand: boolean;
+export interface PlayerAccessories {
+  hasHat: boolean;
+  hasFamiliar: boolean;
+  hasWand: boolean;
 }
 
 export interface GameState {
   page: GamePage;
   attributes: PlayerAttributes;
-  acessories: PlayerAcessories;
+  accessories: PlayerAccessories;
   customization: string;
+  animationState: AnimationState;
   setPage: (page: GamePage) => void;
   updateAttributes: (stat: keyof PlayerAttributes, amount: number) => void;
-buyAcessory: (stat: keyof PlayerAcessories) => void;
+  buyAccessory: (stat: keyof PlayerAccessories) => void;
   setCustomization: (custom: string) => void;
+  setAnimationState: (state: AnimationState) => void;
 }
 
 // Create the context
@@ -47,12 +51,13 @@ import React, { ReactNode, useEffect, useState } from "react";
 // Default state updated to include bread within attributes
 const defaultState: Omit<
   GameState,
-  "setPage" | "updateAttributes" | "setCustomization" | "buyAcessory"
+  "setPage" | "updateAttributes" | "setCustomization" | "buyAccessory" | "setAnimationState"
 > = {
   page: "main-menu",
   attributes: { hacking: 0, mana: 0, bread: 0 }, // Initial bread balance in attributes
-acessories: {hasFamiliar: false, hasHat: false, hasWand: false},
+  accessories: {hasFamiliar: false, hasHat: false, hasWand: false},
   customization: "default",
+  animationState: 'idle',
 };
 
 const loadGameState = (): typeof defaultState => {
@@ -81,11 +86,11 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
       },
     }));
 
-const buyAcessory = (stat: keyof PlayerAcessories) =>
+const buyAccessory = (stat: keyof PlayerAccessories) => 
     setGameState((prev) => ({
       ...prev,
-      acessories: {
-        ...prev.acessories,
+      accessories: { 
+        ...prev.accessories,
         [stat]: true,
       },
     }));
@@ -94,6 +99,9 @@ const buyAcessory = (stat: keyof PlayerAcessories) =>
   const setCustomization = (custom: string) =>
     setGameState((prev) => ({ ...prev, customization: custom }));
 
+  const setAnimationState = (state: AnimationState) =>
+    setGameState((prev) => ({ ...prev, animationState: state }));
+
   return (
     <GameContext.Provider
       value={{
@@ -101,7 +109,8 @@ const buyAcessory = (stat: keyof PlayerAcessories) =>
         setPage,
         updateAttributes,
         setCustomization,
-	buyAcessory,
+        buyAccessory,
+        setAnimationState,
       }}
     >
       {children}

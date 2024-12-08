@@ -31,7 +31,7 @@ const words = [
 ];
 
 export const TypingGame: React.FC = () => {
-  const { updateAttributes, setPage, attributes } = useGame();
+  const { updateAttributes, setPage, attributes, setAnimationState } = useGame();
   const [targetSentence, setTargetSentence] = useState("");
   const [input, setInput] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -122,15 +122,15 @@ export const TypingGame: React.FC = () => {
     if (startTime !== null && !gameOver) {
       timerRef.current = setInterval(() => {
         if (timeLeftRef.current <= 1) {
-          timeLeftRef.current = 0; // Set to 0 before ending the game
-          setTimeLeft(0); // Update state
-          timeLeftStateRef.current = 0; // Ensure ref is set to 0
+          timeLeftRef.current = 0;
+          setTimeLeft(0);
+          timeLeftStateRef.current = 0;
           clearInterval(timerRef.current!);
           timerRef.current = null;
           endGame();
         } else {
           timeLeftRef.current -= 1;
-          setTimeLeft(timeLeftRef.current); // Synchronize UI
+          setTimeLeft(timeLeftRef.current);
         }
       }, 1000);
     }
@@ -138,6 +138,7 @@ export const TypingGame: React.FC = () => {
     return () => {
       if (timerRef.current) {
         clearInterval(timerRef.current);
+        timerRef.current = null;
       }
     };
   }, [startTime, gameOver, endGame]);
@@ -147,6 +148,9 @@ export const TypingGame: React.FC = () => {
 
     const key = e.key;
     if (startTime === null) setStartTime(Date.now());
+
+    setAnimationState('typing');
+    setTimeout(() => setAnimationState('idle'), 300); // Reset after typing
 
     if (key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
       // It's a character key
