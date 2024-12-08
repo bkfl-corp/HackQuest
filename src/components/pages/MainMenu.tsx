@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useGame } from "../../context/GameContext";
 import { Player } from "../Player";
+import backgroundImage from "../../assets/images/bkgrnd1.png" 
 
 export const MainMenu: React.FC = () => {
   const { setPage, attributes } = useGame();
   const [duckPosition, setDuckPosition] = useState({ x: 45 }); // Track only horizontal position
   const [duckDirection, setDuckDirection] = useState("right");
   const duckRef = useRef<HTMLDivElement>(null);
+  const backgroundImageUrl = backgroundImage;
 
   // Update duck's direction based on mouse position
   const handleMouseMove = (e: MouseEvent) => {
@@ -33,6 +35,16 @@ export const MainMenu: React.FC = () => {
   }, []);
 
   return (
+  // Added background here as a css div container
+  <div
+      style={{
+        backgroundImage: `url(${backgroundImageUrl})`,
+        backgroundSize: 'cover', 
+        backgroundPosition: 'center', 
+        backgroundRepeat: 'no-repeat', 
+        width: '100%', 
+      }}
+    >
     <div className="text-center p-6">
       <h2 className="text-3xl font-bold mb-6">Main Menu</h2>
 
@@ -93,5 +105,6 @@ export const MainMenu: React.FC = () => {
         </div>
       </div>
     </div>
+  </div>
   );
 };

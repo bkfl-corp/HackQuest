@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useGame } from "../../context/GameContext";
 import { Player } from "../Player";
+import backgroundImage from "../../assets/images/bkgrnd2.png" 
 
 interface Hackathon {
 	name: string,
@@ -103,8 +104,17 @@ export const Compete: React.FC = () => {
     }, 3000); // 3-second animation
   };
 
+  const backgroundImageUrl = backgroundImage;
+
   return (
-<div>
+<div
+style={{
+        backgroundImage: `url(${backgroundImageUrl})`,
+        backgroundSize: 'cover', 
+        backgroundPosition: 'center', 
+        backgroundRepeat: 'no-repeat', 
+        width: '100%', 
+      }}>
     <div className="text-center mt-5">
       <h2 className="text-3xl font-bold mb-6 ">Compete in Hackathon</h2>
 
