@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useGame } from "../../context/GameContext";
 import { Player } from "../Player";
+import backgroundImage from "../../assets/images/bkgrnd1.png" 
 
 export const MainMenu: React.FC = () => {
   const { setPage, attributes } = useGame();
   const [duckPosition, setDuckPosition] = useState({ x: 45 }); // Track only horizontal position
   const [duckDirection, setDuckDirection] = useState("right");
   const duckRef = useRef<HTMLDivElement>(null);
+  const backgroundImageUrl = backgroundImage;
 
   // Update duck's direction based on mouse position
   const handleMouseMove = (e: MouseEvent) => {
@@ -33,8 +35,19 @@ export const MainMenu: React.FC = () => {
   }, []);
 
   return (
+  // Added background here as a css div container
+  <div
+      className="rounded-lg overflow-hidden"
+      style={{
+        backgroundImage: `url(${backgroundImageUrl})`,
+        backgroundSize: 'cover', 
+        backgroundPosition: 'center', 
+        backgroundRepeat: 'no-repeat', 
+        width: '100%', 
+      }}
+    >
     <div className="text-center p-6">
-      <h2 className="text-3xl font-bold mb-6">Main Menu</h2>
+      <h2 className="text-3xl font-bold mb-6 text-dark-blue">Main Menu</h2>
 
       {/* Menu Buttons */}
       <div className="grid grid-cols-2 gap-4 mb-8 max-w-sm mx-auto">
@@ -65,7 +78,7 @@ export const MainMenu: React.FC = () => {
       </div>
 
       {/* Stats Display */}
-      <div className="flex justify-center space-x-6 text-lg mt-8">
+      <div className="flex justify-center space-x-6 text-lg mt-8 text-dark-blue">
         <div>🍞 {attributes.bread} Bread</div>
         <div>👾 {attributes.hacking} Hacking</div>
         <div>⚡️ {attributes.mana} Mana</div>
@@ -73,7 +86,7 @@ export const MainMenu: React.FC = () => {
 
       {/* Dragon Container */}
       <div
-        className="relative w-full h-20 mt-6 bg-gray-700 p-16"
+        className="relative w-full h-20 mt-6 bg-gray-900 bg-opacity-50 p-16 rounded-lg"
         onClick={handleContainerClick}
       >
         {/* Dragon Emoji */}
@@ -93,5 +106,6 @@ export const MainMenu: React.FC = () => {
         </div>
       </div>
     </div>
+  </div>
   );
 };

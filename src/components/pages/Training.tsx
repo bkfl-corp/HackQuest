@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useGame } from "../../context/GameContext";
+import backgroundImage from "../../assets/images/gxp.gif" 
 
 const words = [
   "and",
@@ -217,9 +218,19 @@ export const TypingGame: React.FC = () => {
       };
     }
   }, [gameOver, resetGame]);
+  
+  const backgroundImageUrl = backgroundImage;
 
   return (
-    <div className="relative text-center mt-5 p-4 bg-gray-800 rounded-lg">
+    <div className="relative text-center mt-5 p-4 bg-gray-800 rounded-lg"
+	style={{
+        backgroundImage: `url(${backgroundImageUrl})`,
+        backgroundSize: 'cover', 
+        backgroundPosition: 'center', 
+        backgroundRepeat: 'no-repeat', 
+        height: '50%', 
+      }}
+	>
       {gameOver ? (
         <div className="flex flex-col justify-center items-center">
           {totalTypedChars > 0 ? (
@@ -264,7 +275,7 @@ export const TypingGame: React.FC = () => {
             <p className="text-lg">Time Left: {timeLeft}s</p>
             <p className="text-lg">Mistakes: {mistakes}/5</p>
           </div>
-          <p className="mb-4 text-white text-2xl bg-gray-700 bg-opacity-50 p-2 rounded-md inline-block">
+          <p className="mb-4 text-white text-2xl bg-gray-600 bg-opacity-50 p-2 rounded-md inline-block">
             {targetSentence.split("").map((char, index) => (
               <React.Fragment key={index}>
                 {index === currentIndex && (
