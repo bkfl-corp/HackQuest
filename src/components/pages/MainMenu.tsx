@@ -85,7 +85,7 @@ export const MainMenu: React.FC = () => {
             position: "absolute",
             bottom: "10px",
             left: `${duckPosition.x}%`,
-            transform: duckDirection === "left" ? "none" : "scaleX(-1)", // Correct horizontal flip without scaling
+            transform: duckDirection === "left" ? "none" : "scaleX(-1)", // horizontal flip without scaling
             fontSize: "2rem",
             transition: "left 0.2s ease, transform 0.2s ease",
             cursor: "default",

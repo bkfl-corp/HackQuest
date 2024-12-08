@@ -3,19 +3,20 @@ import {
   GameContext,
   GameState,
   PlayerAttributes,
-	PlayerAcessories,
+  PlayerAccessories,
   GamePage,
   AnimationState,
 } from "./GameContext";
 
 const defaultState: Omit<
   GameState,
-  "setPage" | "updateAttributes" | "setCustomization" | "buyAcessory"
+  "setPage" | "updateAttributes" | "setCustomization" | "buyAccessory" | "setAnimationState"
 > = {
   page: "main-menu",
   attributes: { hacking: 0, mana: 0, bread: 0 },
   customization: "default",
-		acessories: {hasHat: false, hasFamiliar: false, hasWand: false}
+  accessories: { hasHat: false, hasFamiliar: false, hasWand: false },
+  animationState: "idle",
 };
 
 const loadGameState = (): typeof defaultState => {
@@ -29,12 +30,13 @@ const loadGameState = (): typeof defaultState => {
       mana: parsedState.attributes?.mana || 0,
       bread: parsedState.attributes?.bread || 0,
     },
-acessories: {
-      hasFamiliar: parsedState.acessories?.hasFamiliar || false,
-      hasHat: parsedState.acessories?.hasHat || false,
-      hasWand: parsedState.acessories?.hasWand || false,
-		},
+    accessories: {
+      hasFamiliar: parsedState.accessories?.hasFamiliar || false,
+      hasHat: parsedState.accessories?.hasHat || false,
+      hasWand: parsedState.accessories?.hasWand || false,
+    },
     customization: parsedState.customization || "default",
+    animationState: parsedState.animationState || "idle",
   };
 };
 
@@ -60,15 +62,15 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
       },
     }));
   };
-const buyAcessory = (stat: keyof PlayerAcessories) =>
+
+  const buyAccessory = (stat: keyof PlayerAccessories) =>
     setGameState((prev) => ({
       ...prev,
-      acessories: {
-        ...prev.acessories,
+      accessories: {
+        ...prev.accessories,
         [stat]: true,
       },
     }));
-
 
   const setCustomization = (custom: string) =>
     setGameState((prev) => ({ ...prev, customization: custom }));
@@ -83,7 +85,7 @@ const buyAcessory = (stat: keyof PlayerAcessories) =>
         setPage,
         updateAttributes,
         setCustomization,
-				buyAcessory,
+        buyAccessory,
         setAnimationState,
       }}
     >

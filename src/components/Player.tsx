@@ -6,10 +6,10 @@ import drgnSleep from "../assets/drgn-slp.gif";
 import drgnTyping from "../assets/drgn_typing.gif";
 
 export const Player: React.FC = () => {
-  const { acessories, animationState } = useGame();
-  const familiar = acessories.hasFamiliar ? "🐱" : "";
-  const hat = acessories.hasHat ? "🧢" : "";
-  const wand = acessories.hasWand ? "🪄" : "";
+  const { accessories, animationState } = useGame(); // Corrected spelling
+  const familiar = accessories.hasFamiliar ? "🐱" : "";
+  const hat = accessories.hasHat ? "🧢" : "";
+  const wand = accessories.hasWand ? "🪄" : "";
 
   const [currentGif, setCurrentGif] = useState(drgnIdle);
 
