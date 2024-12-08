@@ -88,7 +88,7 @@ export const MainMenu: React.FC = () => {
 
       {/* Dragon Container */}
       <div
-        className="relative w-full h-20 mt-6 bg-gray-900 bg-opacity-50 p-16 rounded-lg"
+        className="relative w-full h-20 mt-6 bg-gray-800 bg-opacity-50 p-16 rounded-lg"
         onClick={handleContainerClick}
       >
         {/* Dragon Emoji */}
