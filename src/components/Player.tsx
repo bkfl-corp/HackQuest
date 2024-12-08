@@ -33,7 +33,7 @@ export const Player: React.FC = () => {
     <div className="relative inline-block">
       {/* Hat */}
       {hat && (
-        <span className="absolute -top-3 left-7 transform -translate-x-1/2 text-m">
+        <span className="absolute -top-1.5 left-7 transform -translate-x-1/2 text-3xl">
           {hat}
         </span>
       )}
