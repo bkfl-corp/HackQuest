@@ -37,6 +37,7 @@ export const MainMenu: React.FC = () => {
   return (
   // Added background here as a css div container
   <div
+      className="rounded-lg overflow-hidden"
       style={{
         backgroundImage: `url(${backgroundImageUrl})`,
         backgroundSize: 'cover', 
@@ -85,7 +86,7 @@ export const MainMenu: React.FC = () => {
 
       {/* Dragon Container */}
       <div
-        className="relative w-full h-20 mt-6 bg-gray-700 p-16"
+        className="relative w-full h-20 mt-6 bg-gray-900 bg-opacity-50 p-16 rounded-lg"
         onClick={handleContainerClick}
       >
         {/* Dragon Emoji */}

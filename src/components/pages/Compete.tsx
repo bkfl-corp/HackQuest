@@ -28,7 +28,7 @@ function HackathonAnimation() {
 return (
         <div className="race-container flex justify-center space-x-4 mb-6">
           <div className="player text-4xl animate-bounce"><Player /></div>
-          <div className="opponent1 text-4xl animate-bounce">🐉</div>
+          <div className="opponent1 text-4xl animate-bounce"><Player /></div>
         </div>
       );
 	
@@ -108,18 +108,20 @@ export const Compete: React.FC = () => {
 
   return (
 <div
-style={{
-        backgroundImage: `url(${backgroundImageUrl})`,
-        backgroundSize: 'cover', 
-        backgroundPosition: 'center', 
-        backgroundRepeat: 'no-repeat', 
-        width: '100%', 
-      }}>
-    <div className="text-center mt-5">
-      <h2 className="text-3xl font-bold mb-6 text-dark-blue">Compete in Hackathon</h2>
+  className="rounded-lg overflow-hidden"
+  style={{
+    backgroundImage: `url(${backgroundImageUrl})`,
+    backgroundSize: 'cover', 
+    backgroundPosition: 'center', 
+    backgroundRepeat: 'no-repeat', 
+    width: '100%', 
+  }}
+>
+    <div className="text-center mt-4">
+      <h2 className="text-3xl font-bold mb-4 text-dark-blue">Compete in Hackathon</h2>
 
       {/* Display Current Stats */}
-      <div className="mb-6 text-lg text-dark-blue">
+      <div className="mb-5 text-lg text-dark-blue">
         <p>👾 Hacking: {attributes.hacking}</p>
         <p>⚡️ Mana: {attributes.mana}</p>
         <p>🍞 Bread: {attributes.bread}</p>
@@ -140,7 +142,7 @@ style={{
 
       {(! isCompeting) && <button
         onClick={() => setPage("main-menu")}
-        className="mt-6 w-48 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg"
+        className="mt-4 mb-4 w-48 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg"
       >
         Back to Main Menu
       </button>}
