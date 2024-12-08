@@ -7,6 +7,8 @@ export type GamePage =
   | "shop"
   | "settings";
 
+export type AnimationState = 'idle' | 'walking' | 'sleeping' | 'typing';
+
 export interface PlayerAttributes {
   hacking: number;
   mana: number;
@@ -24,10 +26,12 @@ export interface GameState {
   attributes: PlayerAttributes;
   acessories: PlayerAcessories;
   customization: string;
+  animationState: AnimationState;
   setPage: (page: GamePage) => void;
   updateAttributes: (stat: keyof PlayerAttributes, amount: number) => void;
-buyAcessory: (stat: keyof PlayerAcessories) => void;
+  buyAcessory: (stat: keyof PlayerAcessories) => void;
   setCustomization: (custom: string) => void;
+  setAnimationState: (state: AnimationState) => void;
 }
 
 // Create the context
@@ -47,12 +51,13 @@ import React, { ReactNode, useEffect, useState } from "react";
 // Default state updated to include bread within attributes
 const defaultState: Omit<
   GameState,
-  "setPage" | "updateAttributes" | "setCustomization" | "buyAcessory"
+  "setPage" | "updateAttributes" | "setCustomization" | "buyAcessory" | "setAnimationState"
 > = {
   page: "main-menu",
   attributes: { hacking: 0, mana: 0, bread: 0 }, // Initial bread balance in attributes
-acessories: {hasFamiliar: false, hasHat: false, hasWand: false},
+  acessories: {hasFamiliar: false, hasHat: false, hasWand: false},
   customization: "default",
+  animationState: 'idle',
 };
 
 const loadGameState = (): typeof defaultState => {
@@ -94,6 +99,9 @@ const buyAcessory = (stat: keyof PlayerAcessories) =>
   const setCustomization = (custom: string) =>
     setGameState((prev) => ({ ...prev, customization: custom }));
 
+  const setAnimationState = (state: AnimationState) =>
+    setGameState((prev) => ({ ...prev, animationState: state }));
+
   return (
     <GameContext.Provider
       value={{
@@ -101,7 +109,8 @@ const buyAcessory = (stat: keyof PlayerAcessories) =>
         setPage,
         updateAttributes,
         setCustomization,
-	buyAcessory,
+        buyAcessory,
+        setAnimationState,
       }}
     >
       {children}

@@ -30,7 +30,7 @@ const words = [
 ];
 
 export const TypingGame: React.FC = () => {
-  const { updateAttributes, setPage, attributes } = useGame();
+  const { updateAttributes, setPage, attributes, setAnimationState } = useGame();
   const [targetSentence, setTargetSentence] = useState("");
   const [input, setInput] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -146,6 +146,9 @@ export const TypingGame: React.FC = () => {
 
     const key = e.key;
     if (startTime === null) setStartTime(Date.now());
+
+    setAnimationState('typing');
+    setTimeout(() => setAnimationState('idle'), 300); // Reset after typing
 
     if (key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
       // It's a character key

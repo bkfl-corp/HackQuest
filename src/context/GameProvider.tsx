@@ -5,6 +5,7 @@ import {
   PlayerAttributes,
 	PlayerAcessories,
   GamePage,
+  AnimationState,
 } from "./GameContext";
 
 const defaultState: Omit<
@@ -72,6 +73,9 @@ const buyAcessory = (stat: keyof PlayerAcessories) =>
   const setCustomization = (custom: string) =>
     setGameState((prev) => ({ ...prev, customization: custom }));
 
+  const setAnimationState = (state: AnimationState) =>
+    setGameState((prev) => ({ ...prev, animationState: state }));
+
   return (
     <GameContext.Provider
       value={{
@@ -80,6 +84,7 @@ const buyAcessory = (stat: keyof PlayerAcessories) =>
         updateAttributes,
         setCustomization,
 				buyAcessory,
+        setAnimationState,
       }}
     >
       {children}
