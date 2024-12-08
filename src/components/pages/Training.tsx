@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useGame } from "../../context/GameContext";
-import backgroundImage from "../../assets/images/gxp.gif" 
+import backgroundImage from "../../assets/images/gxp.gif";
 
 const words = [
   "and",
@@ -31,7 +31,8 @@ const words = [
 ];
 
 export const TypingGame: React.FC = () => {
-  const { updateAttributes, setPage, attributes, setAnimationState } = useGame();
+  const { updateAttributes, setPage, attributes, setAnimationState } =
+    useGame();
   const [targetSentence, setTargetSentence] = useState("");
   const [input, setInput] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -149,8 +150,8 @@ export const TypingGame: React.FC = () => {
     const key = e.key;
     if (startTime === null) setStartTime(Date.now());
 
-    setAnimationState('typing');
-    setTimeout(() => setAnimationState('idle'), 300); // Reset after typing
+    setAnimationState("typing");
+    setTimeout(() => setAnimationState("idle"), 300); // Reset after typing
 
     if (key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
       // It's a character key
@@ -222,19 +223,20 @@ export const TypingGame: React.FC = () => {
       };
     }
   }, [gameOver, resetGame]);
-  
+
   const backgroundImageUrl = backgroundImage;
 
   return (
-    <div className="relative text-center mt-5 p-4 bg-gray-800 rounded-lg"
-	style={{
+    <div
+      className="relative text-center mt-5 p-4 bg-gray-800 rounded-lg"
+      style={{
         backgroundImage: `url(${backgroundImageUrl})`,
-        backgroundSize: 'cover', 
-        backgroundPosition: 'center', 
-        backgroundRepeat: 'no-repeat', 
-        height: '50%', 
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        height: "50%",
       }}
-	>
+    >
       {gameOver ? (
         <div className="flex flex-col justify-center items-center">
           {totalTypedChars > 0 ? (
@@ -291,7 +293,7 @@ export const TypingGame: React.FC = () => {
                       index === errorIndex
                         ? "red"
                         : index < input.length && input[index] === char
-                        ? "green"
+                        ? "blueviolet"
                         : "white",
                   }}
                 >
