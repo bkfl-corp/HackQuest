@@ -6,7 +6,7 @@ import drgnSleep from "../assets/drgn-slp.gif";
 import drgnTyping from "../assets/drgn_typing.gif";
 
 export const Player: React.FC = () => {
-  const { accessories, animationState } = useGame(); // Corrected spelling
+  const { accessories, animationState } = useGame();
   const familiar = accessories.hasFamiliar ? "🐱" : "";
   const hat = accessories.hasHat ? "🧢" : "";
   const wand = accessories.hasWand ? "🪄" : "";
@@ -30,13 +30,34 @@ export const Player: React.FC = () => {
   }, [animationState]);
 
   return (
-    <span>
-      <div>{hat}</div>
-      <div>
-        {wand}
-        <img src={currentGif} alt="Character Animation" style={{ width: '100px', height: 'auto' }} /> {/* Ensure fixed width */}
-        {familiar}
-      </div>
-    </span>
+    <div className="relative inline-block">
+      {/* Hat */}
+      {hat && (
+        <span className="absolute -top-3 left-7 transform -translate-x-1/2 text-m">
+          {hat}
+        </span>
+      )}
+
+      {/* Wand */}
+      {wand && (
+        <span className="absolute top-12 right-16 text-sm">
+          {wand}
+        </span>
+      )}
+
+      {/* Player Image */}
+      <img
+        src={currentGif}
+        alt="Character Animation"
+        className="w-20 h-auto"
+      />
+
+      {/* Familiar */}
+      {familiar && (
+        <span className="absolute top-9 left-16 text-sm">
+          {familiar}
+        </span>
+      )}
+    </div>
   );
 };
