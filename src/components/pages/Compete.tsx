@@ -116,10 +116,10 @@ style={{
         width: '100%', 
       }}>
     <div className="text-center mt-5">
-      <h2 className="text-3xl font-bold mb-6 ">Compete in Hackathon</h2>
+      <h2 className="text-3xl font-bold mb-6 text-dark-blue">Compete in Hackathon</h2>
 
       {/* Display Current Stats */}
-      <div className="mb-6 text-lg">
+      <div className="mb-6 text-lg text-dark-blue">
         <p>👾 Hacking: {attributes.hacking}</p>
         <p>⚡️ Mana: {attributes.mana}</p>
         <p>🍞 Bread: {attributes.bread}</p>
@@ -130,12 +130,12 @@ style={{
 	  {/* Display Result Message */}
       {message && (! isCompeting) && (
         <div
-          className={`mt-4 text-lg ${
-            message.includes("🎉") ? "text-green-500" : "text-red-500"
-          }`}
-        >
-          {message}
-        </div>
+  className={`mt-4 text-lg ${
+    message.includes("🎉")
+  } text-dark-blue`}
+>
+  {message}
+</div>
       )}
 
       {(! isCompeting) && <button
